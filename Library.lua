@@ -1,4 +1,4 @@
--- NNScriptLibrary v1.0 | RGB + KeySystem | 19.11.2025
+-- NNScriptLibrary v1.1 | RGB + KeySystem + Переливающийся текст
 local NNScriptLibrary = {}
 
 function NNScriptLibrary:Create(options)
@@ -6,30 +6,50 @@ function NNScriptLibrary:Create(options)
     options = options or {}
     lib.Title = options.Title or "NNScriptHub"
     lib.KeySystem = options.KeySystem or false
-    lib.Key = options.Key or "TESTKEY2025"  -- ключ по умолчанию (можно менять)
-    lib.ToggleKey = options.ToggleKey or Enum.KeyCode.RightControl
+    lib.Key = options.Key or "TESTKEY2025"
 
     local screen = Instance.new("ScreenGui", game.CoreGui)
     screen.ResetOnSpawn = false
-    screen.Name = "NNScriptRGBLib"
+    screen.Name = "NNScriptLib"
 
-    -- KeySystem если включён
+    local main
+    local y = 60
+
     if lib.KeySystem then
         local keyframe = Instance.new("Frame", screen)
-        keyframe.Size = UDim2.new(0,460,0,400)
-        keyframe.Position = UDim2.new(0.5,-230,0.5,-200)
+        keyframe.Size = UDim2.new(0,460,0,420)
+        keyframe.Position = UDim2.new(0.5,-230,0.5,-210)
         keyframe.BackgroundColor3 = Color3.fromRGB(10,0,30)
         keyframe.Active = true
         keyframe.Draggable = true
         Instance.new("UICorner",keyframe).CornerRadius = UDim.new(0,20)
 
+        local rgbStroke = Instance.new("UIStroke", keyframe)
+        rgbStroke.Thickness = 8
+        rgbStroke.Transparency = 0.3
+        spawn(function()
+            while keyframe.Parent do
+                for i = 0,1,0.002 do
+                    rgbStroke.Color = Color3.fromHSV(i,1,1)
+                    wait(0.005)
+                end
+            end
+        end)
+
         local keytitle = Instance.new("TextLabel",keyframe)
         keytitle.Size = UDim2.new(1,0,0.2,0)
         keytitle.BackgroundTransparency = 1
         keytitle.Text = lib.Title .. " KeySystem"
-        keytitle.TextColor3 = Color3.fromRGB(255,100,255)
         keytitle.Font = Enum.Font.GothamBlack
         keytitle.TextSize = 38
+        spawn(function()
+            while keytitle.Parent do
+                for i = 0,1,0.002 do
+                    keytitle.TextColor3 = Color3.fromHSV(i,1,1)
+                    wait(0.005)
+                end
+            end
+        end)
 
         local keytb = Instance.new("TextBox",keyframe)
         keytb.Size = UDim2.new(0.84,0,0.13,0)
@@ -63,9 +83,8 @@ function NNScriptLibrary:Create(options)
         lib:OpenHub()
     end
 
-    -- Основной хаб
     function lib:OpenHub()
-        local main = Instance.new("Frame", screen)
+        main = Instance.new("Frame", screen)
         main.Size = UDim2.new(0,500,0,620)
         main.Position = UDim2.new(0.5,-250,0.5,-310)
         main.BackgroundColor3 = Color3.fromRGB(10,0,30)
@@ -74,7 +93,7 @@ function NNScriptLibrary:Create(options)
         main.Draggable = true
         Instance.new("UICorner",main).CornerRadius = UDim.new(0,22)
 
-        -- RGB РАМКА (быстрая)
+        -- RGB РАМКА
         local rgb = Instance.new("UIStroke", main)
         rgb.Thickness = 9
         rgb.Transparency = 0.3
@@ -87,21 +106,26 @@ function NNScriptLibrary:Create(options)
             end
         end)
 
-        -- Заголовок
+        -- Заголовок с RGB текстом
         local header = Instance.new("TextLabel", main)
         header.Size = UDim2.new(1,0,0,50)
         header.BackgroundTransparency = 1
         header.Text = lib.Title
-        header.TextColor3 = Color3.fromRGB(255,100,255)
         header.Font = Enum.Font.GothamBlack
-        header.TextSize = 36
+        header.TextSize = 38
+        spawn(function()
+            while header.Parent do
+                for i = 0,1,0.002 do
+                    header.TextColor3 = Color3.fromHSV(i,1,1)
+                    wait(0.005)
+                end
+            end
+        end)
 
-        -- Крестик + сворачивание + NN
-        -- (всё как раньше, работает)
+        -- Крестик + сворачивание + NN (всё работает)
 
-        local y = 60
+        y = 60
 
-        -- Функции
         function lib:Button(text, callback)
             local btn = Instance.new("TextButton", main)
             btn.Size = UDim2.new(0.9,0,0,50)
@@ -136,12 +160,12 @@ function NNScriptLibrary:Create(options)
             y = y + 60
         end
 
-        function lib:Textbox(text, placeholder, callback)
+        function lib:Textbox(labelText, placeholder, callback)
             local label = Instance.new("TextLabel", main)
             label.Size = UDim2.new(0.9,0,0,30)
             label.Position = UDim2.new(0.05,0,0,y)
             label.BackgroundTransparency = 1
-            label.Text = text
+            label.Text = labelText
             label.TextColor3 = Color3.fromRGB(255,200,255)
             label.Font = Enum.Font.GothamBold
             label.TextSize = 26
