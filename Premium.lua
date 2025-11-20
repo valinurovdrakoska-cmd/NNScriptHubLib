@@ -1,3 +1,4 @@
+-- NNScriptLibrary v2.0 | Полностью рабочая + RGB текст + KeySystem
 -- NNScriptHub Premium | Запуск
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/valinurovdrakoska-cmd/NNScriptHubLib/refs/heads/main/Library.lua"))()
 
@@ -18,3 +19,5 @@ window:Textbox("WalkSpeed", "Введите скорость", function(val)
     local n = tonumber(val)
     if n then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = n end
 end)
+
+-- и т.д.
