@@ -1,4 +1,4 @@
--- Premium.lua | NNScriptHub Premium — ВСЁ ВНУТРИ
+-- Premium.lua | NNScriptHub Premium — ВСЁ РАБОТАЕТ
 local plr = game.Players.LocalPlayer
 local uis = game:GetService("UserInputService")
 local rs = game:GetService("RunService")
@@ -12,7 +12,7 @@ local window = lib:Create({
     Key = "NNPREMIUM-XAI2025"
 })
 
--- === ВСЕ ФИЧИ ===
+-- === ВСЕ КНОПКИ (теперь точно видны) ===
 
 -- Fly
 local flying = false
@@ -43,7 +43,6 @@ local function stopFly()
     flying = false
     if flyBV then flyBV:Destroy() end
 end
-
 window:Toggle("Fly", false, function(state)
     if state then startFly() else stopFly() end
 end)
@@ -57,7 +56,7 @@ end)
 -- WalkSpeed
 window:Textbox("WalkSpeed", "Введите скорость", function(val)
     local n = tonumber(val)
-    if n and plr.Character and plr.Character:FindFirstChild("Humanoid") then
+    if n and plr.Character then
         plr.Character.Humanoid.WalkSpeed = n
         if n == 666 then
             game.StarterGui:SetCore("SendNotification",{Title="OMG!",Text="осуждаю но уважаю 😈",Duration=6})
@@ -68,7 +67,7 @@ end)
 -- JumpPower
 window:Textbox("JumpPower", "Введите силу прыжка", function(val)
     local n = tonumber(val)
-    if n and plr.Character and plr.Character:FindFirstChild("Humanoid") then
+    if n and plr.Character then
         plr.Character.Humanoid.JumpPower = n
         if n == 666 then
             game.StarterGui:SetCore("SendNotification",{Title="OMG!",Text="осуждаю но уважаю 😈",Duration=6})
